@@ -1,18 +1,21 @@
+# frontend/Dockerfile
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files first
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the code including .env
+# Copy all frontend files
 COPY . .
 
 # Build the Next.js app
 RUN npm run build
 
-# Expose port
+# Expose port 3000
 EXPOSE 3000
 
 # Start the app
