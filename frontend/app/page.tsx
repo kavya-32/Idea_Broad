@@ -1,141 +1,60 @@
+// src/app/landing/page.tsx
 'use client';
 
-import { useEffect, useState } from "react";
+const features = [
+  { title: "Anonymous Sharing", description: "Post your ideas without fear of judgment.", icon: "💡" },
+  { title: "Real-Time Upvoting", description: "See which ideas resonate instantly.", icon: "🔥" },
+  { title: "Zero Friction", description: "No accounts, no clutter. Jump straight in.", icon: "✨" },
+];
 
-interface Idea {
-  id: number;
-  text: string;
-  upvotes: number;
-  created_at: string;
-}
-
-export default function MiniApp() {
-  const [ideas, setIdeas] = useState<Idea[]>([]);
-  const [text, setText] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://idea-broad-3.onrender.com/";
-
-  // Fetch ideas
-  const fetchIdeas = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch(`${API_URL}/ideas/`);
-      const data: Idea[] = await res.json();
-      setIdeas(
-        data.sort(
-          (a, b) =>
-            b.upvotes - a.upvotes || new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        )
-      );
-    } catch (err) {
-      console.error("Error fetching ideas:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchIdeas();
-  }, []);
-
-  // Submit new idea
-  const submitIdea = async () => {
-    if (!text.trim()) return;
-    try {
-      setSubmitting(true);
-      await fetch(`${API_URL}/ideas/`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
-      setText("");
-      fetchIdeas();
-    } catch (err) {
-      console.error("Error submitting idea:", err);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  // Upvote idea
-  const upvote = async (id: number) => {
-    try {
-      await fetch(`${API_URL}/ideas/${id}/upvote/`, { method: "PATCH" });
-      setIdeas(prev =>
-        prev.map(i => (i.id === id ? { ...i, upvotes: i.upvotes + 1 } : i))
-      );
-    } catch (err) {
-      console.error("Error upvoting idea:", err);
-    }
-  };
-
-  // Delete idea
-  const deleteIdea = async (id: number) => {
-    try {
-      await fetch(`${API_URL}/ideas/${id}/`, { method: "DELETE" });
-      setIdeas(prev => prev.filter(i => i.id !== id));
-    } catch (err) {
-      console.error("Error deleting idea:", err);
-    }
-  };
-
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 p-8">
-      <h1 className="text-3xl font-bold mb-6 text-center">IdeaBoard</h1>
+    <div className="min-h-screen bg-gray-50 text-gray-900">
 
-      {/* Submit input */}
-      <div className="max-w-xl mx-auto mb-6 flex gap-2">
-        <input
-          type="text"
-          className="flex-1 p-2 border rounded-md"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter your idea..."
-          onKeyDown={(e) => e.key === "Enter" && submitIdea()}
-          disabled={submitting}
-        />
-        <button
-          onClick={submitIdea}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
-          disabled={submitting}
+      {/* Hero Section */}
+      <section className="flex flex-col justify-center items-center text-center py-32 bg-indigo-50">
+        <h1 className="text-5xl font-extrabold text-indigo-600 mb-6">
+          Welcome to IdeaBoard 🚀
+        </h1>
+        <p className="text-lg text-gray-700 mb-10 max-w-xl">
+          Capture, share, and upvote ideas anonymously. No sign-ups, zero clutter — just pure creativity.
+        </p>
+        <a
+          href="/app"
+          className="px-10 py-4 bg-indigo-600 text-white rounded-full text-lg font-bold hover:bg-indigo-700 transition shadow-lg"
         >
-          Submit
-        </button>
-      </div>
+          Go to Idea Board →
+        </a>
+      </section>
 
-      {/* Ideas List */}
-      {loading ? (
-        <p className="text-center text-gray-600">Loading ideas...</p>
-      ) : ideas.length === 0 ? (
-        <p className="text-center text-gray-600">No ideas yet.</p>
-      ) : (
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {ideas.map((idea) => (
-            <li
-              key={idea.id}
-              className="p-4 bg-white border rounded-md shadow flex justify-between items-center"
-            >
-              <span>{idea.text}</span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => upvote(idea.id)}
-                  className="px-2 py-1 bg-indigo-600 text-white rounded hover:bg-indigo-700 text-xs"
-                >
-                  🔥 {idea.upvotes}
-                </button>
-                <button
-                  onClick={() => deleteIdea(idea.id)}
-                  className="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700 text-xs"
-                >
-                  🗑 Delete
-                </button>
-              </div>
-            </li>
+      {/* Features Section */}
+      <section className="py-20 bg-white">
+        <h2 className="text-4xl font-bold text-center mb-16">Why IdeaBoard?</h2>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
+          {features.map((f, i) => (
+            <div key={i} className="p-8 bg-gray-50 rounded-xl shadow hover:shadow-lg transition text-center">
+              <div className="text-4xl mb-4">{f.icon}</div>
+              <h3 className="text-xl font-bold mb-2">{f.title}</h3>
+              <p className="text-gray-600">{f.description}</p>
+            </div>
           ))}
-        </ul>
-      )}
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="py-20 bg-indigo-600 text-white text-center">
+        <h2 className="text-4xl font-extrabold mb-4">Ready to share your ideas?</h2>
+        <p className="text-lg mb-8 max-w-xl mx-auto">
+          Start posting your vision today — no commitment required.
+        </p>
+        <a
+          href="/app"
+          className="px-10 py-4 bg-white text-indigo-700 rounded-full font-bold hover:bg-gray-100 transition shadow-xl"
+        >
+          Launch Idea Board →
+        </a>
+      </section>
+
     </div>
   );
 }
