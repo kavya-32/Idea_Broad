@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build --no-lint",        // disables ESLint during build
+    "build": "next build --no-lint",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "type-check": "tsc --noEmit"           // optional: to manually check TypeScript types
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "react": "19.1.0",
@@ -26,4 +26,3 @@
     "@eslint/eslintrc": "^3"
   }
 }
-
