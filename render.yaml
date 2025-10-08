@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: ideaboard-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8000
+    autoDeploy: true
+
+  - type: web
+    name: ideaboard-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://ideaboard-backend.onrender.com
