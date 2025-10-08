@@ -1,24 +1,27 @@
-# Stage 1: Build React app
-FROM node:20-alpine AS build
+# Use Node.js 20 Alpine image
+FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
-# Copy package files first to leverage caching
+# Copy package.json and package-lock.json
 COPY package*.json ./
+
+# Install dependencies
 RUN npm install
 
-# Copy all source code and build
+# Copy the rest of the code
 COPY . .
+
+# Build the React app for production
 RUN npm run build
 
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
+# Install serve to serve the build folder
+RUN npm install -g serve
 
-# Copy build output to Nginx html folder
-COPY --from=build /app/build /usr/share/nginx/html
+# Expose port
+ENV PORT 3000
+EXPOSE $PORT
 
-# Expose port 80 (Render uses this for web services)
-EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Run the app using serve
+CMD ["sh", "-c", "serve -s build -l $PORT"]
