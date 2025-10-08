@@ -3,11 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --no-lint",
-    "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "type-check": "tsc --noEmit"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "react": "19.1.0",
