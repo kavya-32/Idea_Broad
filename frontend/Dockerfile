@@ -1,27 +1,22 @@
-# Use Node.js 20 Alpine image
+# Use Node 20 Alpine for smaller image
 FROM node:20-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
+# Copy package files first to leverage caching
 COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the code
+# Copy all project files
 COPY . .
 
-# Build the React app for production
+# Build the Next.js app
 RUN npm run build
 
-# Install serve to serve the build folder
-RUN npm install -g serve
+# Expose the port (Next.js default)
+EXPOSE 3000
 
-# Expose port
-ENV PORT 3000
-EXPOSE $PORT
-
-# Run the app using serve
-CMD ["sh", "-c", "serve -s build -l $PORT"]
+# Start the app
+CMD ["npm", "start"]
