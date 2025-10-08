@@ -24,7 +24,9 @@ INSTALLED_APPS = [
     'ideas',
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+   https://idea-broad-3.onrender.com/,
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
