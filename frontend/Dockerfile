@@ -5,14 +5,13 @@ FROM node:20-alpine
 WORKDIR /app
 
 # Copy only package files first to leverage Docker cache
-COPY frontend/package*.json ./
+COPY package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy all frontend source code
 COPY . .
-
 
 # Build the Next.js app (skip ESLint during build)
 RUN npm run build
