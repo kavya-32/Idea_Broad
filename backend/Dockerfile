@@ -13,4 +13,11 @@ RUN pip install -r requirements.txt
 # Copy the rest of the code
 COPY . .
 
+# Collect static files (important for Django)
+RUN python manage.py collectstatic --noinput
+
+# Expose port (use Render's PORT environment variable)
 EXPOSE 8000
+
+# Start the server with Gunicorn (recommended for production)
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "your_project_name.wsgi:application"]
