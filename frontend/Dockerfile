@@ -1,21 +1,18 @@
-# Use Node 20 Alpine for smaller image
 FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy package files first to leverage caching
+# Copy package files first
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
 
-# Copy all project files
+# Copy the rest of the code including .env
 COPY . .
 
 # Build the Next.js app
 RUN npm run build
 
-# Expose the port (Next.js default)
+# Expose port
 EXPOSE 3000
 
 # Start the app
