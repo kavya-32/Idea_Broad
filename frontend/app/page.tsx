@@ -15,7 +15,7 @@ export default function MiniApp() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://idea-broad-3.onrender.com/";
 
   // Fetch ideas
   const fetchIdeas = async () => {
