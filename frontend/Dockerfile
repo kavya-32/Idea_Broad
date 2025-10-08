@@ -11,7 +11,8 @@ COPY frontend/package*.json ./
 RUN npm install
 
 # Copy all frontend source code
-COPY frontend/. .
+COPY . .
+
 
 # Build the Next.js app (skip ESLint during build)
 RUN npm run build
