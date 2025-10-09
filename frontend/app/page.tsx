@@ -27,8 +27,7 @@ export default function LandingPage() {
 
     const fetchIdeas = async () => {
       try {
-        const res = await fetch(`${API_URL}/ideas/`);
-        
+        const res = await fetch(`${API_URL}/api/ideas/`);         
         // Response check जोड़ें
         if (!res.ok) {
             throw new Error(`Failed to fetch ideas: ${res.status}`);
