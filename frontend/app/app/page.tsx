@@ -17,7 +17,7 @@ export default function MiniApp() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://your-backend-url.onrender.com/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   // Fetch ideas
   const fetchIdeas = async () => {
