@@ -23,13 +23,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'ideas',
 ]
-
 CORS_ALLOWED_ORIGINS = [
-    "https://idea-broad-frontend.onrender.com",  # 👈 your exact frontend URL
-    "https://idea-broad-3.onrender.com",         # add your live frontend too
-    "https://idea-broad1-git-main-kavya-baghels-projects.vercel.app", 
+    "https://idea-broad-frontend.onrender.com", 
+    "https://idea-broad-4.onrender.com",         
+    # आपका Vercel URL (सही सिंटैक्स के साथ)
+    "https://idea-broad-kavya-git-main-kavya-baghels-projects.vercel.app", 
 ]
 
+# बाकी settings.py कोड...
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
