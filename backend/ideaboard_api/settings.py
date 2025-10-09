@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = [
     "https://idea-broad-frontend.onrender.com",  # 👈 your exact frontend URL
     "https://idea-broad-3.onrender.com",         # add your live frontend too
+    "https://idea-broad1-git-main-kavya-baghels-projects.vercel.app", 
 ]
 
 MIDDLEWARE = [
