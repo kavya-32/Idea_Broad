@@ -62,6 +62,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ideaboard_api.wsgi.application'
 
 # Database
+# settings.py में पुराना पाथ
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
