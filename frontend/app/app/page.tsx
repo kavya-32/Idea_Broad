@@ -10,9 +10,10 @@ const fetchIdeas = async () => {
     if (!res.ok) throw new Error(`API returned ${res.status}`);
     const data: Idea[] = await res.json();
     setIdeas(
-      data.sort((a, b) => 
-        b.upvotes - a.upvotes ||
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      data.sort(
+        (a, b) =>
+          b.upvotes - a.upvotes ||
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       )
     );
   } catch (err: any) {
@@ -46,7 +47,7 @@ const submitIdea = async () => {
   }
 };
 
-// Upvote idea
+// Upvote
 const upvote = async (id: number) => {
   try {
     await fetch(`${API_URL}/api/ideas/${id}/upvote/`, { method: "PATCH" });
@@ -57,7 +58,7 @@ const upvote = async (id: number) => {
   }
 };
 
-// Delete idea
+// Delete
 const deleteIdea = async (id: number) => {
   try {
     await fetch(`${API_URL}/api/ideas/${id}/`, { method: "DELETE" });
