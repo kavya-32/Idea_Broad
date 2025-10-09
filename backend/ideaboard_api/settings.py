@@ -26,6 +26,7 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = [
    https://idea-broad-3.onrender.com/,
+   https://idea-broad1.vercel.app/
 ]
 
 MIDDLEWARE = [
@@ -40,7 +41,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ideaboard_api.urls'
-
+CORS_ALLOW_CREDENTIALS = True
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
