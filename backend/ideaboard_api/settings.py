@@ -5,8 +5,8 @@ from pathlib import Path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY
-SECRET_KEY = 'django-insecure-7*gd69(lh5pmc@+nl2+9fwg=wf@q8x_b&#7@qvunn*!inov)1&'
-DEBUG = True
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-7*gd69(lh5pmc@+nl2+9fwg=wf@q8x_b&#7@qvunn*!inov)1&') # FIX: Get SECRET_KEY from environment
+DEBUG = os.environ.get('DEBUG', 'True') == 'True' # FIX: Get DEBUG from environment
 
 # Allow all hosts for Render demo
 ALLOWED_HOSTS = ['*']
@@ -23,14 +23,17 @@ INSTALLED_APPS = [
     'corsheaders',
     'ideas',
 ]
+
+# FIX: CORS Configuration for Vercel and Render
 CORS_ALLOWED_ORIGINS = [
-    "https://idea-broad-frontend.onrender.com", 
-    "https://idea-broad-4.onrender.com",         
-    # आपका Vercel URL (सही सिंटैक्स के साथ)
-    "https://idea-broad-kavya-git-main-kavya-baghels-projects.vercel.app", 
+    # 1. Your Render Backend URL
+    "https://idea-broad-4.onrender.com",
+    # 2. Your Vercel Preview URL (The one you provided)
+    "https://idea-broad-kavya-git-main-kavya-baghels-projects.vercel.app",
+    # 3. Your Vercel Production URL (Always include the root domain)
+    "https://idea-broad-kavya.vercel.app",
 ]
 
-# बाकी settings.py कोड...
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -62,11 +65,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ideaboard_api.wsgi.application'
 
 # Database
-# settings.py में पुराना पाथ
+# FIX: Use the Render Persistent Disk path for SQLite to prevent container crash.
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db_data', 'db.sqlite3'),
+        # CRITICAL FIX: Assumes Render Disk Mount Path is /var/data
+        'NAME': '/var/data/db.sqlite3',
     }
 }
 
