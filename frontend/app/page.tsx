@@ -47,27 +47,22 @@ export default function LandingPage() {
         </a>
       </section>
 
-      {/* Top Ideas Section */}
-      <section className="py-20 max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-6 text-center">Top Ideas</h2>
-        {loading ? (
-          <p className="text-center text-gray-600">Loading ideas...</p>
-        ) : ideas.length === 0 ? (
-          <p className="text-center text-gray-500">No ideas yet. Be the first!</p>
-        ) : (
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {ideas.slice(0, 4).map((idea) => (
-              <li
-                key={idea.id}
-                className="p-4 bg-white rounded shadow flex justify-between items-center"
-              >
-                <span>{idea.text}</span>
-                <span className="text-indigo-600 font-bold">🔥 {idea.upvotes}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
+{Array.isArray(ideas) && ideas.length > 0 ? (
+  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {ideas.slice(0, 4).map((idea) => (
+      <li
+        key={idea.id}
+        className="p-4 bg-white rounded shadow flex justify-between items-center"
+      >
+        <span>{idea.text}</span>
+        <span className="text-indigo-600 font-bold">🔥 {idea.upvotes}</span>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p className="text-center text-gray-500">No ideas yet. Be the first!</p>
+)}
+
 
       {/* How It Works Section */}
       <section className="py-20 bg-gray-100 text-center">
